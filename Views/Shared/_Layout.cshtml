@@ -1,0 +1,82 @@
+﻿@{
+    var cart = new Cart(Context);
+
+    var current = ViewContext.RouteData.Values["area"]?.ToString() ??
+        ViewContext.RouteData.Values["controller"]?.ToString();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>planthouse @ViewBag.Title</title>
+    <link rel="icon" href="~/images/logo-only.svg" type="image/svg">
+    <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link href="~/css/site.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    @RenderSection("scripts", false)
+</head>
+<body>
+    <img class="bg-img" src="~/images/home-bg.jpg" alt="background image" />
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-body-tertiary px-5 py-4">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu"
+                aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+            <a class="w-50 justify-content-start" asp-action="Index" asp-controller="Home" asp-area="">
+                <img src="~/images/logo-horizontal-all-white.svg" alt="Logo" height="40em" />
+            </a>
+
+            <ul class="navbar-nav w-50 justify-content-around">
+                <li class="nav-item">
+                    <a class="nav-link @Nav.Active("Home", current)" asp-action="Index" asp-controller="Home" asp-area="" id="nav-text">
+                        Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @Nav.Active("Plant", current)" asp-action="List" asp-controller="Plant" asp-area="" id="nav-text">
+                        Plants
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @Nav.Active("ScientificName", current)" asp-action="List" asp-controller="ScientificName" asp-area="" id="nav-text">
+                        Scientific Names
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav w-50 justify-content-end">
+                <li class="nav-item">
+                    <a class="@Nav.Active("Cart", current)" asp-action="Index" asp-controller="Cart" asp-area="">
+                        <img src="~/images/nav-icons/cart.svg" alt="Cart" id="nav-img" />
+                    </a>
+                </li>
+
+                <!-- This link has not been implemented yet -->
+                <li class="nav-item">
+                    <a class="@Nav.Active("Register", current)" asp-action="Register" asp-controller="Home" asp-area="">
+                        <img src="~/images/nav-icons/register.svg" alt="Sign Up" id="nav-img" />
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="@Nav.Active("Admin", current)" asp-action="Index" asp-controller="Plant" asp-area="Admin">
+                        <img src="~/images/nav-icons/admin.svg" alt="Admin" id="nav-img" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        @if (TempData.Keys.Contains("message"))
+        {
+            <h4 class="bg-info text-center text-white p-2 m-0" id="msg">@TempData["message"]</h4>
+        }
+        @RenderBody()
+    </main>
+</body>
+</html>

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<LightLevel>
+
+@{
+    ViewData["Title"] = " | Manage Light Levels";
+}
+
+<h1 class="mb-4">Manage Light Levels</h1>
+<ul class="list-group">
+    <li class="list-group-item p-4">
+        <h5 class="m-0"><a class="text-green fw-bold" asp-action="Add" asp-area="Admin">Add a Light Level</a></h5>
+    </li>
+    <li class="list-group-item p-4 text-green">
+        <table class="table table-bordered table-striped table-sm m-0">
+            <thead>
+                <tr class="text-green">
+                    <th>Light Level Id</th>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (LightLevel lightLevel in Model)
+                {
+                    <tr>
+                        <td class="text-green">@lightLevel.LightLevelId</td>
+                        <td class="text-green">@lightLevel.Name</td>
+                        <td>
+                            <a asp-action="ViewPlants" asp-area="Admin" asp-route-id="@lightLevel.LightLevelId"
+                               class="btn btn-primary me-2">View Plants</a>
+                            <a asp-action="Edit" asp-area="Admin" asp-route-id="@lightLevel.LightLevelId"
+                               class="btn btn-primary me-2">Edit</a>
+                            <a asp-action="Delete" asp-area="Admin" asp-route-id="@lightLevel.LightLevelId"
+                               class="btn btn-primary me-2">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </li>
+</ul>

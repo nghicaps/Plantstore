@@ -1,0 +1,144 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+    overflow: hidden;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* margin-bottom: 60px; */
+  font-family: 'BC Alphapipe';
+}
+
+#menu {
+    flex: 1;
+    margin: auto !important;
+    display: flex;
+    justify-content: space-between;
+}
+
+#msg {
+    background-color: rgba(255, 216, 0, 1);
+}
+
+#nav-img {
+    height: 1.5em;
+    padding-left: 2em;
+}
+
+#nav-text {
+    color: rgba(255, 216, 0, 1);
+}
+
+a#nav-text.nav-link:hover {
+    color: rgba(255, 255, 255, 1);
+}
+
+a#nav-text.nav-link.active {
+    color: rgba(255, 255, 255, 1);
+}
+
+#nav-text-admin {
+    color: rgba(255, 216, 0, 1);
+    padding: 0;
+    margin-right: 2em;
+}
+
+a#nav-text-admin.nav-link:hover {
+    color: rgb(58, 109, 82);
+}
+
+a#nav-text-admin.nav-link.active {
+    color: rgb(58, 109, 82);
+}
+
+.nav-link {
+    font-size: 1.5em;
+}
+
+.btn-primary {
+    background: rgb(58, 109, 82);
+    border-color: rgb(58, 109, 82);
+}
+
+.btn-primary:hover {
+    background: rgba(255, 216, 0, 1);
+    border-color: rgba(255, 216, 0, 1);
+}
+
+.btn-primary-outline {
+    background: none;
+    border-color: rgb(58, 109, 82);
+    color: rgb(58, 109, 82);
+}
+
+.btn-primary-outline:hover {
+    border-color: rgba(255, 216, 0, 1);
+    color: rgba(255, 216, 0, 1);
+}
+
+.btn-outline-primary {
+    border: none;
+    color: rgb(58, 109, 82);
+}
+
+.btn-outline-primary:hover {
+    background: rgba(255, 216, 0, 1);
+}
+
+.btn-outline-primary.active {
+    background: rgb(58, 109, 82);
+}
+
+.text-green {
+    color: rgb(58, 109, 82);
+    text-decoration: none;
+}
+
+a.text-green:hover {
+    color: rgba(255, 216, 0, 1);
+}
+
+.form-check-input:checked {
+    background: rgb(58, 109, 82);
+    border-color: rgb(58, 109, 82);
+}
+
+h5 > a {
+    color: white;
+}
+
+h5 > a:hover {
+    color: rgba(255, 216, 0, 1);
+}
+
+.bg-img {
+    height: 100vh;
+    width: 100vw;
+    object-fit: cover;
+    filter: brightness(0.6);
+    position: absolute;
+    z-index: -1;
+}
+
+.plain-bg {
+    height: 100vh;
+    width: 100vw;
+    object-fit: cover;
+    background-color: white;
+    color: rgb(58, 109, 82);
+    padding: 2em;
+}

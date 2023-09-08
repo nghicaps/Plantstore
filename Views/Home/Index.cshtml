@@ -1,0 +1,17 @@
+﻿@model Plant
+
+<div class="text-center d-flex flex-column pt-5">
+    <h1 class="text-white">Low-Maintenance Favorite</h1>
+    <ul class="list-group">
+        <li class="list-item">
+            <h5>
+                <a asp-controller="Plant"
+                   asp-action="Details"
+                   asp-route-id="@Model.PlantId"
+                   asp-route-slug="@Model.Title.Slug()">
+                    @Model.Title
+                </a>
+            </h5>
+        </li>
+    </ul>
+</div>

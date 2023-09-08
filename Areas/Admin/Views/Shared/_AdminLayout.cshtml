@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "_Layout";
+
+    var current = ViewContext.RouteData.Values["controller"]?.ToString();
+}
+
+@section scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<div class="plain-bg">
+    <h1>Administrator</h1>
+    <hr />
+    <ul class="nav mt-2 mb-3">
+        <li class="nav-item">
+            <a asp-action="Index" asp-controller="Plant"
+               class="nav-link @Nav.Active("Plant", current)" id="nav-text-admin">
+                Manage Plants
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-action="Index" asp-controller="ScientificName"
+               class="nav-link @Nav.Active("ScientificName", current)" id="nav-text-admin">
+                Manage Scientific Names
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-action="Index" asp-controller="LightLevel"
+               class="nav-link @Nav.Active("LightLevel", current)" id="nav-text-admin">
+                Manage Light Levels
+            </a>
+        </li>
+    </ul>
+    <hr />
+
+    @RenderBody()
+</div>

@@ -1,0 +1,34 @@
+﻿@model SearchViewModel
+
+@{
+    ViewData["Title"] = " | Manage Plants";
+}
+
+<h1 class="mb-4">Manage Plants</h1>
+<ul class="list-group">
+    <li class="list-group-item p-4">
+        <h5 class="m-0"><a class="text-green fw-bold" asp-action="Add">Add a Plant</a></h5>
+    </li>
+    <li class="list-group-item p-4 text-green">
+        <form asp-action="Search" method="post" class="form-check m-0 p-0">
+            <h5>Find a Plant</h5>
+            <label>Search Term:</label>
+            <input type="text" asp-for="SearchTerm" class="form-control mt-2 mb-3">
+            Search By:
+            <label class="form-check-label ms-5">
+                <input type="radio" class="form-check-input" asp-for="Type" value="plant" checked />
+                Common Name
+            </label>
+            <label class="form-check-label ms-5">
+                <input type="radio" class="form-check-input" asp-for="Type" value="scientificName" />
+                Scientific Name
+            </label>
+            <label class="form-check-label ms-5">
+                <input type="radio" class="form-check-input" asp-for="Type" value="lightLevel" />
+                Light Level
+            </label>
+            <button type="submit" class="btn btn-primary ms-4">Find</button>
+            <span asp-validation-for="SearchTerm" class="text-danger"></span>
+        </form>
+    </li>
+</ul>

@@ -1,0 +1,44 @@
+﻿@model CartItem
+
+@{
+    ViewData["Title"] = " | Edit Cart";
+}
+
+<div class="plain-bg">
+    <h1>Edit Cart Item</h1>
+    <form asp-action="Edit" method="post">
+        <ul class="list-group mt-4 mb-4">
+            <li class="list-group-item text-green">@Model.Plant.Title</li>
+            <li class="list-group-item">
+                <div class="row text-green">
+                    <div class="col-1">
+                        <label>Price:</label>
+                    </div>
+                    <div class="col">
+                        @Model.Plant.Price.ToString("c")
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="form-row text-green">
+                    <div class="col-1">
+                        <label asp-for="Quantity">Quantity:</label>
+                    </div>
+                    <div class="col">
+                        <select asp-for="Quantity" class="form-control text-green">
+                            @for (int i = 1; i <= 10; i++)
+                            {
+                                <option>@i</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <input type="hidden" asp-for="Plant.PlantId" />
+        <input type="hidden" asp-for="Plant.Title" />
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Index" asp-controller="Cart" class="btn btn-primary">Cancel</a>
+    </form>
+</div>

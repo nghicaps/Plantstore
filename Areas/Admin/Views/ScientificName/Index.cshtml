@@ -1,0 +1,25 @@
+﻿@model IEnumerable<ScientificName>
+
+@{
+    ViewData["Title"] = " | Manage Scientific Names";
+}
+
+<h1 class="mb-4">Manage Scientific Names</h1>
+<ul class="list-group">
+    <li class="list-group-item p-4">
+        <h5 class="m-0"><a class="text-green fw-bold" asp-action="Add">Add a Scientific Name</a></h5>
+    </li>
+    <li class="list-group-item p-4 text-green">
+        <form asp-action="Select" method="post" class="form-inline m-0 p-0">
+            <h5 class="mt-1 mr-5">Select a Scientific Name</h5>
+            <select name="id" class="form-control mt-2 mb-3 text-green"
+                    asp-items='@new SelectList(Model, "ScientificNameId", "FullName")'></select>
+            <input type="submit" name="Operation" value="View Plants"
+                   class="btn btn-primary me-2" />
+            <input type="submit" name="Operation" value="Edit"
+                   class="btn btn-primary me-2" />
+            <input type="submit" name="Operation" value="Delete"
+                   class="btn btn-primary me-2" />
+        </form>
+    </li>
+</ul>

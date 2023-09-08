@@ -1,0 +1,85 @@
+﻿@model CartViewModel
+
+@{
+    ViewData["Title"] = " | Cart";
+}
+
+<div class="plain-bg">
+    <h1>Your Cart</h1>
+
+    <form asp-action="Clear" method="post">
+        <ul class="list-group mt-4 mb-4">
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col text-green">
+                        Subtotal: @Model.Subtotal.ToString("c")
+                    </div>
+                    <div class="col">
+                        <div class="float-right">
+                            <a asp-action="Checkout" class="btn btn-primary me-2">Checkout</a>
+                            <button type="submit" class="btn btn-primary-outline me-2">Clear Cart</button>
+                            <a asp-action="List" asp-controller="Plant"
+                               asp-all-route-data="@Model.PlantGridRoute" class="btn btn-primary-outline me-2">Back to Shopping</a>
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </form>
+    <form asp-action="Remove" method="post">
+        <table class="table">
+            <thead class="thead-dark text-green">
+                <tr>
+                    <th>Title</th>
+                    <th>Scientific Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="text-green">
+                @foreach (CartItem item in Model.List)
+                {
+                    <tr>
+                        <td>
+                            <a class="text-green" asp-action="Details" asp-controller="Plant"
+                               asp-route-id="@item.Plant.PlantId"
+                               asp-route-slug="@item.Plant.Title.Slug()">
+                                @item.Plant.Title
+                            </a>
+                        </td>
+                        <td>
+                            @foreach (var keyValuePair in item.Plant.ScientificNames)
+                            {
+                                <p>
+                                    <a class="text-green" asp-action="Details" asp-controller="ScientificName"
+                                       asp-route-id="@keyValuePair.Key"
+                                       asp-route-slug="@keyValuePair.Value.Slug()">
+                                        @keyValuePair.Value
+                                    </a>
+                                </p>
+                            }
+                        </td>
+                        <td>@item.Plant.Price.ToString("c")</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Subtotal.ToString("c")</td>
+                        <td>
+                            <div class="float-right">
+                                <a asp-action="Edit" asp-controller="Cart"
+                                   asp-route-id="@item.Plant.PlantId"
+                                   asp-route-slug="@item.Plant.Title.Slug()"
+                                   class="btn btn-primary me-2">Edit</a>
+                                <button type="submit" name="id" value="@item.Plant.PlantId"
+                                        class="btn btn-primary-outline me-2">
+                                    Remove
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>

@@ -1,0 +1,75 @@
+﻿@model ScientificNameListViewModel
+@{
+    ViewData["Title"] = " | Scientific Name Catalogue";
+
+    RouteDictionary current = Model.CurrentRoute;
+    RouteDictionary routes = Model.CurrentRoute.Clone();
+}
+
+<div class="plain-bg">
+    <h1>Scientific Name Catalogue</h1>
+
+    <table class="table table-bordered table-striped table-sm mt-4 mb-4">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @{
+                        routes.SetSortAndDirection(nameof(ScientificName.Genus), current);
+                    }
+                    <a asp-action="List" asp-all-route-data="@routes"
+                        class="text-green">Genus</a>
+                </th>
+                <th>
+                    @{
+                        routes.SetSortAndDirection(nameof(ScientificName.Species), current);
+                    }
+                    <a asp-action="List" asp-all-route-data="@routes"
+                        class="text-green">Species</a>
+                </th>
+                <th class="text-green">Plant(s)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ScientificName scientificName in Model.ScientificNames)
+            {
+                <tr>
+                    <td>
+                        <a class="text-green fst-italic" asp-action="Details" asp-route-id="@scientificName.ScientificNameId"
+                            asp-route-slug="@scientificName.FullName.Slug()">
+                            @scientificName.Genus
+                        </a>
+                    </td>
+                    <td>
+                        <a class="text-green fst-italic" asp-action="Details" asp-route-id="@scientificName.ScientificNameId"
+                            asp-route-slug="@scientificName.FullName.Slug()">
+                            @scientificName.Species
+                        </a>
+                    </td>
+                    <td>
+                        @foreach (var ba in scientificName.Scientifics)
+                        {
+                            <p>
+                                <a class="text-green" asp-action="Details" asp-controller="Plant"
+                                    asp-route-id="@ba.PlantId"
+                                    asp-route-slug="@ba.Plant.Title.Slug()">
+                                    @ba.Plant.Title
+                                </a>
+                            </p>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @{
+        routes = Model.CurrentRoute.Clone();
+
+        for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            routes.PageNumber = i;
+            <a asp-action="List" asp-all-route-data="@routes"
+                class="btn btn-outline-primary @Nav.Active(i, current.PageNumber)">@i</a>
+        }
+    }
+</div>

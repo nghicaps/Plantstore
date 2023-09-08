@@ -1,0 +1,33 @@
+﻿@model ScientificName
+
+@{
+    ViewData["Title"] = " | Scientific Name";
+}
+
+<div class="plain-bg">
+    <h1>Scientific Name</h1>
+
+    <table class="table table-bordered table-sm text-green mt-4 mb-4">
+        <thead>
+            <tr class="thead-dark">
+                <th>@Model.FullName</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @foreach (var ba in Model.Scientifics)
+                    {
+                        <p>
+                            <a class="text-green" asp-action="Details" asp-controller="Plant"
+                               asp-route-id="@ba.PlantId"
+                               asp-route-slug="@ba.Plant.Title.Slug()">
+                                @ba.Plant.Title
+                            </a>
+                        </p>
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

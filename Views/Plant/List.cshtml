@@ -1,0 +1,146 @@
+﻿@model PlantListViewModel
+
+@{
+    ViewData["Title"] = " | Plant Catalogue";
+
+    RouteDictionary current = Model.CurrentRoute;
+    RouteDictionary routes = Model.CurrentRoute.Clone();
+}
+
+<div class="plain-bg">
+    <h1>Plant Catalogue</h1>
+
+    <form asp-action="Filter" method="post">
+        <div class="row">
+            <div class="col m-2">
+                <label>Scientific Name: </label>
+                <select name="filter" class="form-control text-green mt-2 mb-2"
+                        asp-items="@(new SelectList(
+                            Model.ScientificNames, "ScientificNameId", "FullName", current.ScientificNameFilter))">
+                    <option value="@PlantsGridDTO.DefaultFilter">All</option>
+                </select>
+            </div>
+            <div class="col m-2">
+                <label>Light Level: </label>
+                <select name="filter" class="form-control text-green mt-2 mb-2"
+                        asp-items="@(new SelectList(
+                            Model.LightLevels, "LightLevelId", "Name", current.LightLevelFilter))">
+                    <option value="@PlantsGridDTO.DefaultFilter">All</option>
+                </select>
+            </div>
+            <div class="col m-2">
+                <label>Price: </label>
+                <select name="filter" class="form-control text-green mt-2 mb-2"
+                        asp-items="@(new SelectList(
+                            Model.Prices, "Key", "Value", current.PriceFilter))">
+                    <option value="@PlantsGridDTO.DefaultFilter">All</option>
+                </select>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center mb-4">
+            <div class="col-1  d-flex justify-content-end p-1">
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+            <div class="col-1  d-flex justify-content-start p-1">
+                <button type="submit" class="btn btn-primary-outline" name="clear" value="true">
+                    Clear
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <form asp-action="Add" asp-controller="Cart" method="post">
+        <table class="table table-bordered table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>
+                        @{
+                            routes.SetSortAndDirection(nameof(Plant.Title), current);
+                        }
+                        <a class="text-green" asp-action="List" asp-all-route-data="@routes">Common Name</a>
+                    </th>
+                    <th class="text-green">Scientific Name</th>
+                    <th>
+                        @{
+                            routes.SetSortAndDirection(nameof(LightLevel), current);
+                        }
+                        <a class="text-green" asp-action="List" asp-all-route-data="@routes">Light Level</a>
+                    </th>
+                    <th>
+                        @{
+                            routes.SetSortAndDirection(nameof(Plant.Price), current);
+                        }
+                        <a class="text-green" asp-action="List" asp-all-route-data="@routes">Price</a>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Plant plant in Model.Plants)
+                {
+                    <tr>
+                        <td>
+                            <a class="text-green" asp-action="Details" asp-route-id="@plant.PlantId"
+                                asp-route-slug="@plant.Title.Slug()">
+                                @plant.Title
+                            </a>
+                        </td>
+                        <td>
+                            @foreach (var ba in plant.Scientifics)
+                            {
+                                <p>
+                                    <a class="text-green" asp-action="Details" asp-controller="ScientificName"
+                                        asp-route-id="@ba.ScientificNameId"
+                                        asp-route-slug="@ba.ScientificName.FullName.Slug()">
+                                        @ba.ScientificName.FullName
+                                    </a>
+                                </p>
+                            }
+                        </td>
+                        <td class="text-green">@plant.LightLevel?.Name</td>
+                        <td class="text-green">@plant.Price.ToString("c")</td>
+                        <td class="d-flex justify-content-center">
+                            <button type="submit" name="id" value="@plant.PlantId"
+                                    class="btn btn-primary">
+                                Add To Cart
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+
+    <div class="row">
+        <div class="col-2 mb-1">
+            <form asp-action="PageSize" method="post">
+                <label class="mb-2">Page Size: </label>
+                <div class="row">
+                    <div class="col pe-1">
+                        <select name="pagesize" class="form-control text-green"
+                                asp-items="@(new SelectList(Model.PageSizes, current.PageSize))">
+                        </select>
+                    </div>
+                    <div class="col ps-1">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-8">
+            <label class="mb-2 opacity-0"></label>
+            <div class="d-flex justify-content-center">
+                @{
+                    routes = Model.CurrentRoute.Clone();
+
+                    for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        routes.PageNumber = i;
+                        <a asp-action="List" asp-all-route-data="@routes"
+                            class="btn btn-outline-primary @Nav.Active(i, current.PageNumber)">@i</a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

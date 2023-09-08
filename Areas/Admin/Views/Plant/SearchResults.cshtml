@@ -1,0 +1,38 @@
+﻿@model SearchViewModel
+
+@{
+    ViewData["Title"] = " | Search Results";
+}
+
+<h1 class="mb-4">@Model.Header</h1>
+<a asp-action="Index" class="btn btn-primary-outline mb-4">New Search</a>
+
+<table class="table">
+    <tbody>
+        @foreach (var plant in Model.Plants)
+        {
+            <tr class="text-green">
+                <td>
+                    <a class="text-green" asp-action="Details" asp-controller="Plant"
+                       asp-area="" asp-route-id="@plant.PlantId"
+                       asp-route-slug="@plant.Title.Slug()">@plant.Title</a>
+                </td>
+                <td>@plant.LightLevel.Name</td>
+                <td>
+                    @foreach (Scientific ba in plant.Scientifics)
+                    {
+                        <div>@ba.ScientificName.FullName</div>
+                    }
+                </td>
+                <td>
+                    <div class="float-right">
+                        <a asp-action="Edit" asp-route-id="@plant.PlantId"
+                           class="btn btn-primary me-2">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@plant.PlantId"
+                           class="btn btn-primary me-2">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
